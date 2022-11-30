@@ -119,3 +119,12 @@ header {
     width: 500px;
     height: 500px;
 }
+
+#tekstikenttä {
+    padding: 1em;
+    border: none;
+    background-color: #fec704;
+    font-family: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", "sans serif";
+    color: black;
+    font-size: 0.8em;
+}

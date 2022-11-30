@@ -147,8 +147,9 @@ valintoja.addEventListener("change", function () {
                     var tämä = li[t];
                     //JQueryn fadeIn metodilla tuodaan nykyinen li elementti esille animoidusti
                     $(tämä).fadeIn(600);
-                    //Odotetaan
-                    await new Promise(resolve => setTimeout(resolve, 200));
+                    //Odotetaan (kommentoitu pois, jotta hakutoiminto toimisi vaikka alettaisiin kirjoittamaan heti...
+                    //...kun teatteri on valittu)
+                    //await new Promise(resolve => setTimeout(resolve, 2));
                 }
             }
             //Kutsutaan funktio, kun lista on haettu ja sortattu
@@ -202,4 +203,36 @@ valintoja.addEventListener("change", function () {
         }
     });
 });
-
+//Kun kirjoitetaan tekstikenttään jotain, ajetaan funktio...
+$('#tekstikenttä').keyup(function () {
+    //Määritellään funktio...
+    function hakufunktio(syötettyteksti) {
+        //...jossa haetaan jokainen li elementti ja käydään ne läpi yksitellen...
+        $('li').each(function () {
+            //Määritellään muuttuja "löytyi", jota käytetään myöhemmin määrittelemään löytyikö haettu asia
+            var löytyi = 'false';
+            //...ja jokaista kohden katsotaan funktiolla...
+            $(this).each(function () {
+                //...täsmääkö mikään teksti sen alla kirjoitettuun tekstiin (oli se kirjoitettu isolla tai pienellä)...
+                if ($(this).text().toLowerCase().indexOf(syötettyteksti.toLowerCase()) >= 0) {
+                    //...jos löytyi vaihdetaan muuttuja "löytyi" sen kohdalta löytyneeksi...
+                    löytyi = 'true';
+                }
+            });
+            //...sitten jos haku tuotti tulosta...
+            if (löytyi == 'true') {
+                //...käsittelyssä oleva li elementti pidetään esillä tai tuodaan esille...
+                let $tämä = $(this);
+                $tämä.closest('li').show();
+            }
+            //...jos haku ei tuottanut tulosta...
+            else {
+                //...käsittelyssä oleva li elementti piilotetaan...
+                let $tämä = $(this);
+                $tämä.closest('li').hide();
+            }
+        });
+    }
+    //...ja lopuksi kutsutaan funktio niin että se katsoo tekstikenttään kirjoitettua tekstiä...
+    hakufunktio($(this).val());
+});
