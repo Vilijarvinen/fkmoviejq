@@ -66,6 +66,8 @@ valintoja.addEventListener("change", function () {
         lapsetVittuun(lista);
     }
     poistaKaikki();
+    //Aina kun vaihdetaan teatteri, tyhjennetään myös tekstikenttä
+    $('#tekstikenttä').val('');
     //...määritellään valittu vaihtoehto muuttujaan...
     var valinta = document.getElementById("teatteriv").value;
     //...leikataan valitun vaihtoehdon alusta ID...
