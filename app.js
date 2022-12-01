@@ -174,15 +174,23 @@ $("#teatteriv").on("change", function () {
                 //Haetaan nykyhetki
                 var nykyHetki = new Date();
                 //Jostain syystä "nykyhetki" on 1 kk taaksepäin, joten lisätään kuukauteen 1
-                nykyHetki.setMonth(nykyHetki.getMonth() + 1);
+                var mm = nykyHetki.getMonth() + 1;
                 //Lisätään myös päivään 1, jotta nähdään tänään esitykseen tulleet oikein
-                nykyHetki.setDate(nykyHetki.getDate() + 1);
+                var pv = nykyHetki.getDate() + 1;
+                //Jos päivä on 1. - 9. niin lisätään alkuun 0
+                if (pv < 10) {
+                    pv = "0" + pv;
+                }
+                //Jos kuukausi on 1. - 9. niin lisätään alkuun 0
+                if (mm < 10) {
+                    mm = "0" + mm;
+                }
                 //Määritellään vuosi, kk ja pv samaan järjestykseen datasta löytyvän päivämäärän kanssa...
-                var nyt = nykyHetki.getFullYear() + "/" + nykyHetki.getMonth() + "/" + nykyHetki.getDate();
+                var nyt = nykyHetki.getFullYear() + "/" + mm + "/" + pv;
                 //...poistetaan välistä turhat merkit...
                 var nytheti = nyt.replaceAll("/", "");
                 //Konsoli loki testaukseen (kommentoitu pois, koska se täyttää konsolin)
-                //console.log(nytheti);
+                console.log(nytheti);
                 //...jos julkaisupäivä aiemmin kuin "nykyhetki", eli huominen...
                 if (aikaa < nytheti) {
                     //...käsittelyssä olevan p elementin vanhemman vanhempaan lisätään div, joka määrittelee elokuva/esityksen olevan esityksessä...
