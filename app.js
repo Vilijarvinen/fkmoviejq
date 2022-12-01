@@ -39,9 +39,9 @@ $(function () {
             //Luodaan JQuery objekti haetulle datalle, jotta haettua dataa voidaan lukea sekä manipuloida JQueryn avulla
             var $teatterit = $(teatteridata);
             //Määritellään muuttuja, johon haetaan "TheatreAreas" tagi ja sen sisältö JQueryn avulla
-            var teatterit = $teatterit.find('TheatreAreas');
+            var $teatterial = $teatterit.find('TheatreAreas');
             //"TheatreAreas" tagin sisältä haetaan kaikki "TheatreArea" tagit ja suoritetaan funktio jokaista kohden
-            teatterit.children('TheatreArea').each(function () {
+            $teatterial.children('TheatreArea').each(function () {
                 //Määritellään yhteen muuttujaan sekä teatterin ID, että teatterin nimi
                 let teatteri = $(this).find('ID').text() + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + $(this).find('Name').text();
                 //Lisätään uusi vaihtoehto selektoriin, jossa on teatterin ID ja nimi
@@ -50,11 +50,8 @@ $(function () {
         }
     })
 });
-
-//Määritellään selektori muuttujaan
-var valintoja = document.getElementById("teatteriv");
 //Kun selektorin valinta vaihtuu...
-valintoja.addEventListener("change", function () {
+$("#teatteriv").on("change", function () {
     //...tyhjennetään vanha lista (ostoslistasta tutulla funktiolla)...
     function poistaKaikki() {
         function lapsetVittuun(parent) {
@@ -66,18 +63,13 @@ valintoja.addEventListener("change", function () {
         lapsetVittuun(lista);
     }
     poistaKaikki();
-    //Aina kun vaihdetaan teatteri, tyhjennetään myös tekstikenttä
+    //...tyhjennetään myös tekstikenttä...
     $('#tekstikenttä').val('');
-    //...määritellään valittu vaihtoehto muuttujaan...
-    var valinta = document.getElementById("teatteriv").value;
-    //...leikataan valitun vaihtoehdon alusta ID...
-    var valintaid = valinta.substring(0, 4);
-    //Konsoli loki testaukseen
-    console.log(valintaid);
     //...sitten JQueryyn rakennetulla ajax metodilla...
     $.ajax({
-        //...osoitteesta joka osittain määritellään valitun vaihtoehdon ID:n perusteella...
-        url: "https://www.finnkino.fi/xml/Events/?area=" + valintaid,
+        //...osoitteesta, joka osittain määritellään valitun vaihtoehdon ID:n perusteella...
+        //...leikkaamalla se valinnan alusta,...
+        url: "https://www.finnkino.fi/xml/Events/?area=" + $('#teatteriv').val().substring(0, 4),
         //...haetaan data...
         method: 'GET',
         //...datan haun onnistuessa, kutsutaan funktio, jossa luetaan ja manipuloidaan haettua dataa
